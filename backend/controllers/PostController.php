@@ -55,6 +55,9 @@ class PostController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    else{
+        echo "You don't have permission to use this function.";
+    }
 }
     /**
      * Displays a single Post model.
@@ -68,6 +71,9 @@ class PostController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+    else{
+        echo "You don't have permission to use this function.";
     }
 }
     /**
@@ -87,6 +93,9 @@ class PostController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+    else{
+        echo "You don't have permission to use this function.";
     }
 }
     /**
@@ -109,6 +118,9 @@ class PostController extends Controller
             'model' => $model,
         ]);
     }
+    else{
+        echo "You don't have permission to use this function.";
+    }
 }
     /**
      * Deletes an existing Post model.
@@ -123,6 +135,9 @@ class PostController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+    else{
+        echo "You don't have permission to use this function.";
     }
 }
     /**
