@@ -21,7 +21,7 @@ class PostController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+/*            'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
@@ -30,7 +30,7 @@ class PostController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
-            ],
+            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -46,6 +46,7 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
+        if(Yii::$app->user->can('post-list')){
         $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,7 +55,7 @@ class PostController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+}
     /**
      * Displays a single Post model.
      * @param integer $id
@@ -63,11 +64,12 @@ class PostController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->can('post-view')){
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
-
+}
     /**
      * Creates a new Post model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -75,6 +77,7 @@ class PostController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->can('post-create')){
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -85,7 +88,7 @@ class PostController extends Controller
             'model' => $model,
         ]);
     }
-
+}
     /**
      * Updates an existing Post model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -95,6 +98,7 @@ class PostController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->can('post-update')){
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -105,7 +109,7 @@ class PostController extends Controller
             'model' => $model,
         ]);
     }
-
+}
     /**
      * Deletes an existing Post model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -115,11 +119,12 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
+        if(Yii::$app->user->can('post-delete')){
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
-
+}
     /**
      * Finds the Post model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
