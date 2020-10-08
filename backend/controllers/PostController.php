@@ -8,7 +8,8 @@ use backend\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+// use yii\filters\AccessControl;
+use common\components\AccessControl;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -31,6 +32,10 @@ class PostController extends Controller
                     ],
                 ],
             ],*/
+            'access' =>[
+                // 'class' => 'common\components\AccessControl'
+                'class' => AccessControl::class
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -46,7 +51,7 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('post-list')){
+        // if(Yii::$app->user->can('post-index')){
         $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,10 +59,10 @@ class PostController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
-    else{
-        echo "You don't have permission to use this function.";
-    }
+    // }
+    // else{
+    //     echo "You don't have permission to use this function.";
+    // }
 }
     /**
      * Displays a single Post model.
@@ -67,14 +72,14 @@ class PostController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('post-view')){
+        // if(Yii::$app->user->can('post-view')){
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-    else{
-        echo "You don't have permission to use this function.";
-    }
+    // }
+    // else{
+    //     echo "You don't have permission to use this function.";
+    // }
 }
     /**
      * Creates a new Post model.
@@ -83,7 +88,7 @@ class PostController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('post-create')){
+        // if(Yii::$app->user->can('post-create')){
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -93,11 +98,11 @@ class PostController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    // }
+    // else{
+    //     echo "You don't have permission to use this function.";
+    // }
     }
-    else{
-        echo "You don't have permission to use this function.";
-    }
-}
     /**
      * Updates an existing Post model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -107,7 +112,7 @@ class PostController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('post-update')){
+        // if(Yii::$app->user->can('post-update')){
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -117,10 +122,10 @@ class PostController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-    else{
-        echo "You don't have permission to use this function.";
-    }
+    // }
+    // else{
+    //     echo "You don't have permission to use this function.";
+    // }
 }
     /**
      * Deletes an existing Post model.
@@ -131,14 +136,14 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('post-delete')){
+        // if(Yii::$app->user->can('post-delete')){
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-    else{
-        echo "You don't have permission to use this function.";
-    }
+    // }
+    // else{
+    //     echo "You don't have permission to use this function.";
+    // }
 }
     /**
      * Finds the Post model based on its primary key value.
